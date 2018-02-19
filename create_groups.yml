@@ -5,13 +5,21 @@
   tasks:
   - name: Add hosts from tag_awx_masters_True to masters
     add_host:
-      name: "tag_awx_masters_True"
-      groups: "masters:children"
+      name: "{{ item.inventory_hostname }}"
+      groups: "masters"
+    with_items: "{{ groups['tag_awx_masters_True'] }}"
   - name: Add hosts from tag_awx_etcd_True to etcd
     add_host:
-      name: "tag_awx_etcd_True"
-      groups: "etcd:children"
+      name: "{{ item.inventory_hostname }}"
+      groups: "etcd"
+    with_items: "{{ groups['tag_awx_etcd_True'] }}"
   - name: Add hosts from tag_awx_nodes_True to nodes
     add_host:
-      name: "tag_awx_etcd_True"
-      groups: "nodes:children"
+      name: "{{ item.inventory_hostname }}"
+      groups: "nodes"
+    with_items: "{{ groups['tag_awx_nodes_True'] }}"
+
+
+- hosts: OSEv3
+  tasks:
+  - wait_for_connection: {}
