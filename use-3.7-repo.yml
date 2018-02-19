@@ -1,4 +1,4 @@
-- hosts: OSEv3
+- hosts: "g_master_hosts:g_node_hosts:g_etcd_hosts"
   tasks:
   - name: Disable aos-3.9 repo
     command: yum-config-manager -q --disable aos-3.9
