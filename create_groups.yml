@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: Add hosts from tag_awx_masters_True to masters
+    add_host:
+      name: "tag_awx_masters_True"
+      groups: "masters:children"
+  - name: Add hosts from tag_awx_etcd_True to etcd
+    add_host:
+      name: "tag_awx_etcd_True"
+      groups: "etcd:children"
+  - name: Add hosts from tag_awx_nodes_True to nodes
+    add_host:
+      name: "tag_awx_etcd_True"
+      groups: "nodes:children"
