@@ -8,7 +8,7 @@
   - aws_region: "us-east-1"
   - aws_subnet: "subnet-cf57c596"
   - aws_security_group: public
-  - vm_prefix: "vrutkovs_"
+  - vm_prefix: "vrutkovs_awx"
   - vms:
     - aws_image: "ami-0d4d4777"
       aws_flavor: t2.large
