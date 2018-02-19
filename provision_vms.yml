@@ -7,34 +7,30 @@
   - aws_key: "libra"
   - aws_region: "us-east-1"
   - aws_subnet: "subnet-cf57c596"
-  - aws_image: "ami-0d4d4777"
   - aws_security_group: public
   - vm_prefix: "vrutkovs_"
-
   - vms:
-    - name_template: "{{ vm_prefix }}-master"
-      groups:
-        - masters
-        - etcd
-        - nodes
+    - aws_image: "ami-0d4d4777"
       aws_flavor: t2.large
       amount: 1
+      tags:
+        awx_masters: true
+        awx_etcd: true
+        awx_nodes: true
+        "kubernetes.io/cluster/vrutkovs": "true"
+        Name: "{{ vm_prefix }}-master"
 
   tasks:
   - name: Create a VM
     ec2:
       region: "{{ aws_region }}"
       key_name: "{{ aws_key }}"
-      instance_type: "{{ outer_item.aws_flavor }}"
-      image: "{{ outer_item.aws_image | default(aws_image) }}"
+      instance_type: "{{ item.aws_flavor }}"
+      image: "{{ item.aws_image | default(aws_image) }}"
       wait: yes
       group: "{{ aws_security_group }}"
-      count: "{{ outer_item.amount }}"
+      count: "{{ item.amount }}"
       vpc_subnet_id: "{{ aws_subnet }}"
       assign_public_ip: yes
-      instance_tags:
-        Name:  "{{ outer_item.name_template }}-{{ item }}"
-        "kubernetes.io/cluster/vrutkovs": "true"
+      instance_tags: "{{ item.tags }}"
     with_items: "{{ vms }}"
-    loop_control:
-      loop_var: outer_item
