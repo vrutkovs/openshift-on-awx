@@ -1,0 +1,6 @@
+- hosts: OSEv3
+  tasks:
+  - name: Disable aos-3.9 repo
+    command: yum-config-manager -q --disable aos-3.9
+  - name: Enable aos-3.7 repo
+    command: yum-config-manager -q --enable aos-3.7
