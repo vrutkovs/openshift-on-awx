@@ -7,18 +7,36 @@
   - aws_key: "libra"
   - aws_region: "us-east-1"
   - aws_subnet: "subnet-cf57c596"
+  - aws_image: "ami-0d4d4777"
   - aws_security_group: public
   - vm_prefix: "vrutkovs_awx"
   - vms:
-    - aws_image: "ami-0d4d4777"
-      aws_flavor: t2.large
-      amount: 1
+    - aws_flavor: "{{ survey_master_flavor | default(t2.large) }}"
+      amount: {{ survey_masters | default(1) }}
       tags:
         awx_masters: true
         awx_etcd: true
         awx_nodes: true
         "kubernetes.io/cluster/vrutkovs": "true"
         Name: "{{ vm_prefix }}-master"
+    - aws_flavor: "{{ survey_dedicated_master_flavor | default(t2.large) }}"
+      amount: {{ survey_dedicated_masters | default(0) }}
+      tags:
+        awx_masters: true
+        "kubernetes.io/cluster/vrutkovs": "true"
+        Name: "{{ vm_prefix }}-dedicated-master"
+    - aws_flavor: "{{ survey_dedicated_etcd_flavor | default(t2.large) }}"
+      amount: {{ survey_dedicated_etcd | default(0) }}
+      tags:
+        awx_etcd: true
+        "kubernetes.io/cluster/vrutkovs": "true"
+        Name: "{{ vm_prefix }}-dedicated-etcd"
+    - aws_flavor: "{{ survey_dedicated_nodes_flavor | default(t2.large) }}"
+      amount: {{ survey_dedicated_nodes | default(0) }}
+      tags:
+        awx_nodes: true
+        "kubernetes.io/cluster/vrutkovs": "true"
+        Name: "{{ vm_prefix }}-dedicated-etcd"
 
   tasks:
   - name: Create a VM
