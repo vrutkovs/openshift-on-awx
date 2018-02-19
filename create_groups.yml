@@ -5,17 +5,17 @@
   tasks:
   - name: Add hosts from tag_awx_masters_True to masters
     add_host:
-      name: "{{ item.inventory_hostname }}"
+      name: "{{ item }}"
       groups: "masters"
     with_items: "{{ groups['tag_awx_masters_True'] }}"
   - name: Add hosts from tag_awx_etcd_True to etcd
     add_host:
-      name: "{{ item.inventory_hostname }}"
+      name: "{{ item }}"
       groups: "etcd"
     with_items: "{{ groups['tag_awx_etcd_True'] }}"
   - name: Add hosts from tag_awx_nodes_True to nodes
     add_host:
-      name: "{{ item.inventory_hostname }}"
+      name: "{{ item }}"
       groups: "nodes"
     with_items: "{{ groups['tag_awx_nodes_True'] }}"
 
