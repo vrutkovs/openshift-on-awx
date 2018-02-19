@@ -1,4 +1,4 @@
-- hosts: "g_master_hosts:g_node_hosts:g_etcd_hosts"
+- hosts: "{{ g_master_hosts }}:{{ g_node_hosts }}:{{ g_etcd_hosts }}"
   tasks:
   - wait_for_connection: {}
   - name: Disable aos-3.9 repo
