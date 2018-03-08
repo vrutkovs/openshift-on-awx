@@ -11,6 +11,7 @@
   - aws_security_group: public
   - vm_prefix: "vrutkovs_awx"
   - aws_default_flavor: "t2.large"
+  - aws_cluster_label: "kubernetes.io/cluster/{{ survey_cluster_label | default('vrutkovs') }}"
   - vms:
     - aws_flavor: "{{ survey_master_flavor | default(aws_default_flavor) }}"
       amount: "{{ survey_masters | default(1) }}"
@@ -18,25 +19,25 @@
         awx_masters: true
         awx_etcd: true
         awx_nodes: true
-        "kubernetes.io/cluster/vrutkovs": "true"
+        "{{ aws_cluster_label }}": "true"
         Name: "{{ vm_prefix }}-master"
     - aws_flavor: "{{ survey_dedicated_master_flavor | default(aws_default_flavor) }}"
       amount: "{{ survey_dedicated_masters | default(0) }}"
       tags:
         awx_masters: true
-        "kubernetes.io/cluster/vrutkovs": "true"
+        "{{ aws_cluster_label }}": "true"
         Name: "{{ vm_prefix }}-dedicated-master"
     - aws_flavor: "{{ survey_dedicated_etcd_flavor | default(aws_default_flavor) }}"
       amount: "{{ survey_dedicated_etcd | default(0) }}"
       tags:
         awx_etcd: true
-        "kubernetes.io/cluster/vrutkovs": "true"
+        "{{ aws_cluster_label }}": "true"
         Name: "{{ vm_prefix }}-dedicated-etcd"
     - aws_flavor: "{{ survey_dedicated_nodes_flavor | default(aws_default_flavor) }}"
       amount: "{{ survey_dedicated_nodes | default(0) }}"
       tags:
         awx_nodes: true
-        "kubernetes.io/cluster/vrutkovs": "true"
+        "{{ aws_cluster_label }}": "true"
         Name: "{{ vm_prefix }}-dedicated-etcd"
 
   tasks:
