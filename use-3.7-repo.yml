@@ -9,3 +9,5 @@
     command: yum-config-manager -q --disable aos-3.9
   - name: Enable aos-3.7 repo
     command: yum-config-manager -q --enable aos-3.7
+  - name: Disable rhel7next repos
+    command: yum-config-manager -q --disable rhel7next rhel7next-optional rhel7next-extras
