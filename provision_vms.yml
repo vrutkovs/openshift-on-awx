@@ -7,7 +7,7 @@
   - aws_key: "libra"
   - aws_region: "us-east-1"
   - aws_subnet: "subnet-cf57c596"
-  - aws_image: "ami-0d4d4777"
+  - aws_image: "ami-05bfd2f29755b7a6d"
   - aws_security_group: public
   - vm_prefix: "vrutkovs_awx"
   - aws_default_flavor: "t2.large"
